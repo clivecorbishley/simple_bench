@@ -23,6 +23,8 @@ $ gem install simple_bench
 
 ### .simple
 
+Takes method names as strings, and runs each method once
+
 ```ruby
 # Example
 def method_one
@@ -33,12 +35,13 @@ def method_two
   # Call code you want to run
 end
 
-# Takes method names as strings
 SimpleBench.simple('method_one', 'method_two')
 ```
 
 ### .n_times
 
+Takes method names as strings, and number of times for each to be run
+
 ```ruby
 # Example
 def method_one
@@ -49,12 +52,13 @@ def method_two
   # Call code you want to run
 end
 
-# Takes method names as strings, and number of times to be run
 SimpleBench.n_times('method_one', 'method_two', 150)
 ```
 
 ### .tiered
 
+Takes method names as strings and then runs each method once, 1_000 times, 10_000, and 100_000 times respectively
+
 ```ruby
 # Example
 def method_one
@@ -65,6 +69,5 @@ def method_two
   # Call code you want to run
 end
 
-# Takes method names as strings and then runs once, 1_000 times, 10_000, and 100_000 times
 SimpleBench.tiered('method_one', 'method_two')
 ```
