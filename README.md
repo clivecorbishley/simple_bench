@@ -9,6 +9,16 @@ https://ruby-doc.org/stdlib-2.5.3/libdoc/benchmark/rdoc/Benchmark.html
 
 This gem uses the `.bmbm` method
 
+## Installation
+
+```ruby
+# Gemfile
+gem 'simple_bench', '0.0.2'
+
+# Command Line
+$ gem install simple_bench
+```
+
 ## Methods
 
 ### .simple
