@@ -1,37 +1,51 @@
+# frozen_string_literal: true
+
+# Implementation of SimpleBench gem
 module SimpleBench
   class << self
-    def simple(method_1, method_2)
+    # Expects Strings. Runs each method once.
+    def simple(*methods)
       Benchmark.bmbm do |x|
-        x.report("#{method_1}_once") { send(method_1) }
-        x.report("#{method_2}_once") { send(method_2) }
+        methods.each do |method|
+          x.report("#{method}_once") { send(method) }
+        end
       end
     end
 
-    def n_times(method_1, method_2, n)
+    # Expects Strings. Runs each method once, and then as many times as specified
+    def n_times(*methods, number_of_times)
       Benchmark.bmbm do |x|
-        x.report("#{method_1}_once") { send(method_1) }
-        x.report("#{method_2}_once") { send(method_2) }
-        x.report("#{method_1}_#{n}_times") { n.times { send(method_1) } }
-        x.report("#{method_2}_#{n}_times") { n.times { send(method_2) } }
+        methods.each do |method|
+          x.report("#{method}_once") { send(method) }
+        end
+
+        run_multiple_times(x, number_of_times, methods)
       end
     end
 
-    def tiered(method_1, method_2)
+    # Expects Strings. Runs each method once, and then 1_000 times, 20_000 times,
+    # and 75_000 times
+    def tiered(*methods)
       Benchmark.bmbm do |x|
-        x.report("#{method_1}_once") { send(method_1) }
-        x.report("#{method_2}_once") { send(method_2) }
+        tiers = [1_000, 20_000, 75_000]
 
-        n = 1_000
-        x.report("#{method_1}_#{n}_times") { n.times { send(method_1) } }
-        x.report("#{method_2}_#{n}_times") { n.times { send(method_2) } }
+        methods.each do |method|
+          x.report("#{method}_once") { send(method) }
+        end
 
-        n = 10_000
-        x.report("#{method_1}_#{n}_times") { n.times { send(method_1) } }
-        x.report("#{method_2}_#{n}_times") { n.times { send(method_2) } }
+        tiers.each do |tier|
+          run_multiple_times(x, tier, methods)
+        end
+      end
+    end
 
-        n = 100_000
-        x.report("#{method_1}_#{n}_times") { n.times { send(method_1) } }
-        x.report("#{method_2}_#{n}_times") { n.times { send(method_2) } }
+    private
+
+    def run_multiple_times(x, number_of_times, methods)
+      methods.each do |method|
+        x.report("#{method}_#{number_of_times}_times") do
+          number_of_times.times { send(method) }
+        end
       end
     end
   end
