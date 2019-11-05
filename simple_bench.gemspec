@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name = %q{simple_bench}
-  s.version = "0.0.2"
+  s.version = "1.0.2"
   s.authors = "Clive Corbishley"
-  s.date = %q{2019-10-31}
+  s.date = %q{2019-11-05}
   s.summary = %q{Simple wrapper for Ruby's Benchmark}
   s.files = [
     "lib/simple_bench.rb"
